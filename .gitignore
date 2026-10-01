@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+FusionPower/dist/
+FusionPower/game-smoke*.log
+# Keep complete SCML source sprites; exclude local investigation history.
+docs/ai-change-log.md
+docs/superpowers/
+*.sav
+*.log
+.env
+.env.*
+*.user
+.codegraph/
+output/
+.vs/

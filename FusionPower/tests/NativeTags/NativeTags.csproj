@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net48</TargetFramework><LangVersion>latest</LangVersion><Nullable>disable</Nullable>
+    <!-- Intentional table adapters shadow the Unity-dependent native types. -->
+    <NoWarn>$(NoWarn);CS0436</NoWarn>
+    <UseInstalledFrameworkRuntime Condition="'$(UseInstalledFrameworkRuntime)' == '' and !Exists('$(MSBuildProgramFiles32)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.8/mscorlib.dll') and Exists('$(SystemRoot)/Microsoft.NET/Framework64/v4.0.30319/mscorlib.dll')">true</UseInstalledFrameworkRuntime>
+    <AutomaticallyUseReferenceAssemblyPackages Condition="'$(UseInstalledFrameworkRuntime)' == 'true'">false</AutomaticallyUseReferenceAssemblyPackages>
+    <FrameworkPathOverride Condition="'$(UseInstalledFrameworkRuntime)' == 'true'">$(SystemRoot)/Microsoft.NET/Framework64/v4.0.30319</FrameworkPathOverride>
+    <_TargetFrameworkDirectories Condition="'$(UseInstalledFrameworkRuntime)' == 'true'">$(FrameworkPathOverride)</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths Condition="'$(UseInstalledFrameworkRuntime)' == 'true'">$(FrameworkPathOverride)</_FullFrameworkReferenceAssemblyPaths>
+    <GameManaged Condition="'$(GameManaged)' == ''">D:\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed</GameManaged>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/FusionFilterTags.cs" Link="FusionFilterTags.cs" />
+    <Compile Include="../../src/FusionIds.cs" Link="FusionIds.cs" />
+    <Compile Include="../../src/FusionStrings.cs" Link="FusionStrings.cs" />
+    <Reference Include="Assembly-CSharp"><HintPath>$(GameManaged)\Assembly-CSharp.dll</HintPath></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>$(GameManaged)\Assembly-CSharp-firstpass.dll</HintPath></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameManaged)\0Harmony.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(GameManaged)\UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameManaged)\UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

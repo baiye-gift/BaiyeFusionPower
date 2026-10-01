@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems><Nullable>disable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Stubs.cs"/><Compile Include="Program.cs"/>
+    <Compile Include="TripleAlphaScenarios.cs"/>
+    <Compile Include="SeparatorScenarios.cs"/>
+    <Compile Include="../../src/FusionProcessBase.cs" Link="FusionProcessBase.cs"/>
+    <Compile Include="../../src/FusionReactorProcess.cs" Link="FusionReactorProcess.cs"/>
+    <Compile Include="../../src/FusionReactorBalance.cs" Link="FusionReactorBalance.cs"/>
+    <Compile Include="../../src/TripleAlphaBalance.cs" Link="TripleAlphaBalance.cs"/>
+    <Compile Include="../../src/TripleAlphaProcess.cs" Link="TripleAlphaProcess.cs"/>
+    <Compile Include="../../src/TripleAlphaCarbonBatch.cs" Link="TripleAlphaCarbonBatch.cs"/>
+    <Compile Include="../../src/TritiumBreederProcess.cs" Link="TritiumBreederProcess.cs"/>
+    <Compile Include="../../src/IsotopeSeparatorProcess.cs" Link="IsotopeSeparatorProcess.cs"/>
+    <Compile Include="../../src/FusionBatchDispenser.cs" Link="FusionBatchDispenser.cs"/>
+    <Compile Include="../../src/FusionIds.cs" Link="FusionIds.cs"/>
+    <Compile Include="../../src/FusionSecondaryEndpoints.cs" Link="FusionSecondaryEndpoints.cs"/>
+  </ItemGroup>
+</Project>

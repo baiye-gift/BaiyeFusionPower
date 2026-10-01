@@ -1,0 +1,110 @@
+using System;
+using System.Collections.Generic;
+
+namespace Baiye.FusionPower
+{
+    internal static class FusionStrings
+    {
+        private static readonly Dictionary<string, string> names = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> descriptions = new Dictionary<string, string>();
+
+        internal static void Register()
+        {
+            bool zh = UseChinese();
+            AddElement(FusionIds.Deuterium, zh ? "氘气" : "Deuterium Gas", zh ? "氢的稳定同位素，可作为聚变燃料。" : "A stable hydrogen isotope used as fusion fuel.");
+            AddElement(FusionIds.LiquidDeuterium, zh ? "液态氘" : "Liquid Deuterium", zh ? "低温液化的氘。" : "Cryogenic liquid deuterium.");
+            AddElement(FusionIds.SolidDeuterium, zh ? "固态氘" : "Solid Deuterium", zh ? "冻结的氘。" : "Frozen deuterium.");
+            AddElement(FusionIds.Tritium, zh ? "氚气" : "Tritium Gas", zh ? "放射性氢同位素，可与氘发生聚变。" : "A radioactive hydrogen isotope that fuses with deuterium.");
+            AddElement(FusionIds.LiquidTritium, zh ? "液态氚" : "Liquid Tritium", zh ? "低温液化的氚。" : "Cryogenic liquid tritium.");
+            AddElement(FusionIds.SolidTritium, zh ? "固态氚" : "Solid Tritium", zh ? "冻结的氚。" : "Frozen tritium.");
+            AddElement(FusionIds.Helium, zh ? "氦-4" : "Helium-4", zh ? "氘氚聚变产生的惰性气体。" : "An inert gas produced by deuterium–tritium fusion.");
+            AddElement(FusionIds.LiquidHelium, zh ? "液态氦-4" : "Liquid Helium-4", zh ? "低温液化的氦-4。" : "Cryogenic liquid helium-4.");
+            AddElement(FusionIds.Lithium, zh ? "锂-6" : "Lithium-6", zh ? "吸收中子后可增殖氚的锂同位素。" : "A lithium isotope that breeds tritium by neutron capture.");
+            AddElement(FusionIds.LiquidLithium, zh ? "液态锂-6" : "Liquid Lithium-6", zh ? "熔融的锂-6。" : "Molten lithium-6.");
+            AddElement(FusionIds.LithiumVapor, zh ? "锂-6蒸气" : "Lithium-6 Vapor", zh ? "高温气化的锂-6。" : "Vaporized lithium-6.");
+
+            AddBuilding(FusionIds.Separator, zh ? "同位素分离器" : "Isotope Separator",
+                zh ? "从水和盐水中分离聚变燃料原料。" : "Separates fusion feedstock from water and brine.",
+                zh ? "处理水得到氘，处理盐水得到锂-6；排出提取后的原液。锂以 60 g/s 累积在机内，约每满 5 kg 批量掉落；未满批次的库存会保留，供增殖器的首批锂需等待约 83 秒。"
+                   : "Extracts deuterium from water and lithium-6 from brine, returning the depleted liquid. Lithium accumulates at 60 g/s and drops in approximately 5 kg batches; partial stock is retained. The first lithium batch for a breeder takes about 83 seconds.");
+            AddBuilding(FusionIds.Breeder, zh ? "氚增殖器" : "Tritium Breeder",
+                zh ? "用聚变中子照射锂-6制取氚。" : "Irradiates lithium-6 with fusion neutrons to breed tritium.",
+                zh ? "启动时用氘制氚；连接运行中的聚变反应堆后，用中子和锂-6增殖氚，另排出氦。" : "Starts by making tritium from deuterium; when linked to an active fusion reactor, breeds tritium from lithium-6 and neutrons and emits helium.");
+            AddBuilding(FusionIds.Reactor, zh ? "核聚变反应堆" : "Fusion Reactor",
+                zh ? "约束氘氚等离子体，通过机内能量转换装置发电。" : "Confines deuterium-tritium plasma and generates electricity through an internal conversion system.",
+                zh ? "额定发电 16 kW，堆内耗电 2 kW；10 kg/s 循环过冷液带走约 2 MDTU/s 余热。消耗氘和氚，排出氦-4并向附近增殖器提供中子。点火需外部电源、2 kg 氚及 20 kg 过冷液储备；缺料、断电、冷却受阻或电力缓存满时停机。"
+                   : "Rated generation 16 kW with 2 kW reactor demand; 10 kg/s circulating super coolant removes about 2 MDTU/s waste heat. Consumes deuterium and tritium, emits helium-4 and supplies neutrons to a nearby breeder. Startup needs external power, 2 kg tritium and 20 kg coolant. Stops on fuel, power, cooling failure or a full electrical buffer.");
+            AddBuilding(FusionIds.TripleAlpha, zh ? "三α核合成炉" : "Triple-Alpha Furnace",
+                zh ? "模拟恒星中的三α核反应，将氦-4合成稳定的碳-12。小型人工约束为未来技术设定。"
+                   : "Synthesizes stable carbon-12 from helium-4 through the stellar triple-alpha reaction. Compact artificial confinement is speculative technology.",
+                zh ? "每秒消耗 80 g 氦，产出约 79.95 g 原版精炼碳；额定发电 4.4 kW，自耗 1.2 kW。需要 10 kg/s 过冷液，剩余热预算约 0.55 MDTU/s，包含产物显热。碳每满 20 kg 经运输轨道输出。点火需外部电力及 20 kg 冷却储备；缺料、冷却受阻、碳缓冲或电力缓存满时停机。运行产生γ辐射，不提供增殖中子。"
+                   : "Consumes 80 g/s helium and produces about 79.95 g/s refined carbon; rated generation 4.4 kW, demand 1.2 kW. Requires 10 kg/s super coolant. Residual heat budget about 0.55 MDTU/s includes product sensible heat. Carbon leaves in 20 kg conveyor batches. Startup needs external power and 20 kg coolant reserve. Stops on missing fuel, cooling failure or full product/electrical buffers. Emits gamma radiation; no breeding neutrons.");
+        }
+
+        internal static bool UseChinese()
+        {
+            string language = Localization.GetCurrentLanguageCode();
+            return language != null && (language.StartsWith("zh", StringComparison.OrdinalIgnoreCase)
+                || language.EndsWith("chinese", StringComparison.OrdinalIgnoreCase));
+        }
+
+        internal static void RefreshLoadedElements()
+        {
+            if (ElementLoader.elementTable == null) return;
+            RefreshElement(FusionIds.Deuterium);
+            RefreshElement(FusionIds.LiquidDeuterium);
+            RefreshElement(FusionIds.SolidDeuterium);
+            RefreshElement(FusionIds.Tritium);
+            RefreshElement(FusionIds.LiquidTritium);
+            RefreshElement(FusionIds.SolidTritium);
+            RefreshElement(FusionIds.Helium);
+            RefreshElement(FusionIds.LiquidHelium);
+            RefreshElement(FusionIds.Lithium);
+            RefreshElement(FusionIds.LiquidLithium);
+            RefreshElement(FusionIds.LithiumVapor);
+        }
+
+        internal static bool IsFusionElement(SimHashes hash)
+        {
+            return hash == FusionIds.HashOf(FusionIds.Deuterium)
+                || hash == FusionIds.HashOf(FusionIds.LiquidDeuterium)
+                || hash == FusionIds.HashOf(FusionIds.SolidDeuterium)
+                || hash == FusionIds.HashOf(FusionIds.Tritium)
+                || hash == FusionIds.HashOf(FusionIds.LiquidTritium)
+                || hash == FusionIds.HashOf(FusionIds.SolidTritium)
+                || hash == FusionIds.HashOf(FusionIds.Helium)
+                || hash == FusionIds.HashOf(FusionIds.LiquidHelium)
+                || hash == FusionIds.HashOf(FusionIds.Lithium)
+                || hash == FusionIds.HashOf(FusionIds.LiquidLithium)
+                || hash == FusionIds.HashOf(FusionIds.LithiumVapor);
+        }
+
+        private static void RefreshElement(string id)
+        {
+            if (!ElementLoader.elementTable.TryGetValue((int)FusionIds.HashOf(id), out Element element)) return;
+            if (!names.TryGetValue(id, out string name)) return;
+            element.name = name;
+            element.nameUpperCase = name.ToUpperInvariant();
+            element.description = descriptions[id];
+            TagManager.Create(id, name);
+            if (element.substance != null) element.substance.name = name;
+        }
+
+        private static void AddElement(string id, string name, string description)
+        {
+            names[id] = name;
+            descriptions[id] = description;
+            string key = "STRINGS.ELEMENTS." + id.ToUpperInvariant();
+            Strings.Add(key + ".NAME", name);
+            Strings.Add(key + ".DESC", description);
+        }
+
+        private static void AddBuilding(string id, string name, string description, string effect)
+        {
+            string key = "STRINGS.BUILDINGS.PREFABS." + id.ToUpperInvariant();
+            Strings.Add(key + ".NAME", name);
+            Strings.Add(key + ".DESC", description);
+            Strings.Add(key + ".EFFECT", effect);
+        }
+    }
+}
