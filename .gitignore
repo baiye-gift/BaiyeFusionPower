@@ -1,6 +1,7 @@
 **/bin/
 **/obj/
 FusionPower/dist/
+/EcologyCulture/
 FusionPower/game-smoke*.log
 # Keep complete SCML source sprites; exclude local investigation history.
 docs/ai-change-log.md

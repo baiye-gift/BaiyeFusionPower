@@ -26,6 +26,7 @@ namespace Baiye.FusionPower
             def.Overheatable = def.Floodable = false;
             def.AudioCategory = "HollowMetal";
             GeneratedBuildings.RegisterWithOverlay(OverlayScreen.SolidConveyorIDs, ID);
+            FusionCodex.Attach(def);
             return def;
         }
 

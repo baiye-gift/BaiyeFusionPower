@@ -4,14 +4,18 @@
 
 ## 下载与安装
 
-从 [GitHub Releases](https://github.com/baiye-gift/BaiyeFusionPower/releases) 下载 `BaiyeFusionPower-0.4.2.zip`，无需自行编译。
+从 [GitHub Releases](https://github.com/baiye-gift/BaiyeFusionPower/releases) 下载 `BaiyeFusionPower-0.4.3.zip`，无需自行编译。
 
 1. 保存并完全退出游戏。
 2. 将 ZIP 内的整个 `BaiyeFusionPower` 文件夹放到系统「文档」目录下的 `Klei/OxygenNotIncluded/mods/local/`。已有版本先备份，再替换同名目录；不要再嵌套一层文件夹。
 3. 启动游戏，在模组页面启用 **Baiye Fusion Power**，按游戏提示重启。
 4. 四座建筑均由高级核能研究解锁；请准备外部启动电力、燃料及过冷液回路。
 
-当前版本 **0.4.2**，编译验证游戏版本 **U59-744825-SCRPAD**。升级不会清空存档中的库存或热量；锂首次批量落地需要满速累积约 83 秒。下载页同时提供 ZIP 的 SHA-256 校验文件。版本历史见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本 **0.4.3**，编译验证游戏版本 **U59-744825-SCRPAD**。升级不会清空存档中的库存或热量；锂首次批量落地需要满速累积约 83 秒。下载页同时提供 ZIP 的 SHA-256 校验文件。版本历史见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 0.4.3 数据库指南
+
+四座建筑的原生游戏数据库条目追加工艺指南，包含准确接口、启动储备、实际产率、中子联动、冷却余热与自耗区分、氦制碳、批次运输及停机排查。11 个元素相态也有来源/用途说明。沿用原条目并链式保留已有扩展，不重新登记相同 ID；生产规则与 0.4.2 相同。
 
 ## 玩法
 
@@ -97,6 +101,8 @@ $modDirectory = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Klei/Ox
 
 ## 状态
 
+0.4.3：四建筑追加原生数据库指南与 11 相态用途说明，沿用原条目和已有扩展；13 项独立原生 Codex 托管检查通过，未改生产规则。数据库界面和长期多模组兼容待实机验证。
+
 0.4.2：锂按约 5 kg 成批落地并显示仓内库存；50 项离线逻辑回归通过，包括 600 秒产出总量、排料频率、温度和质量守恒、断电保留、过程恢复及回流堵塞。过程恢复使用已有 Storage 适配器，不是真实存档往返。Release 编译通过，0 错误、2 个既有程序集引用警告；实际 CPU 改善、库存面板及升级后的保存/读档仍待游戏验证。四套动画与额定配方本次未改。
 
 0.4.1 玩家已确认筛选问题修复；该版 5 项原生 Tag/转换函数与真实 Harmony 回归通过（元素表适配器，不启动 Unity 管网）。0.4.0 实机日志已显示三α炉 4.4 kW 实际运行读数、库存增长并跨越一次 20 kg 碳批次，这些读数不是整厂净发电或长期热稳态验证。版本历史详见[变更记录](CHANGELOG.md)。
@@ -105,7 +111,9 @@ $modDirectory = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Klei/Ox
 
 ```powershell
 dotnet run --project FusionPower/tests/Regression/Regression.csproj -c Release
-dotnet build FusionPower/tests/NativeTags/NativeTags.csproj -c Release
-./FusionPower/tests/NativeTags/bin/Release/net48/NativeTags.exe 'D:\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed'
+dotnet run --project FusionPower/tests/NativeTags -c Release -- $gameManaged
+dotnet run --project FusionPower/tests/NativeCodex -c Release -- $gameManaged
 python FusionPower/tools/verify-anims.py --preview FusionPower/dist/verification-0.4.0
 ```
+
+生态培养仓另见独立仓库 [BaiyeEcologyCulture](https://github.com/baiye-gift/BaiyeEcologyCulture)，两套模组及其测试均可独立构建。

@@ -30,6 +30,7 @@ namespace Baiye.FusionPower
             def.PowerInputOffset = new CellOffset(0, 0);
             def.LogicInputPorts = LogicOperationalController.CreateSingleInputPortList(new CellOffset(0, 0));
             def.AudioCategory = "HollowMetal";
+            FusionCodex.Attach(def);
             return def;
         }
 
