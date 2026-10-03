@@ -74,7 +74,7 @@ namespace Baiye.FusionPower
             ConduitDispenser liquidDispenser = go.AddComponent<ConduitDispenser>();
             liquidDispenser.conduitType = ConduitType.Liquid;
             liquidDispenser.useSecondaryOutput = true;
-            liquidDispenser.elementFilter = new[] { SimHashes.Water, SimHashes.Brine };
+            liquidDispenser.elementFilter = (SimHashes[])IsotopeSeparatorProcess.AcceptedLiquids.Clone();
             liquidDispenser.storage = depletedLiquid;
             liquidDispenser.alwaysDispense = true;
 

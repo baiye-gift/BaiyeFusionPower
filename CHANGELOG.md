@@ -1,5 +1,15 @@
 # 版本记录
 
+## 0.4.4 — 2026-10-03（本地开发版）
+
+- `FusionPower/src/IsotopeSeparatorProcess.cs`：修复普通盐水 `SaltWater` 被当作杂质排到地上、不生成锂的问题。水、浓盐水 `Brine`、盐水共享接收与配方选择列表，每个付费生产步只取一种足量原料；两种盐水均处理 10 kg/s、产 60 g/s 锂-6，9.94 kg/s 原类型液体回流，约 5 kg 锂批量排出。
+- `FusionPower/src/IsotopeSeparatorConfig.cs`：液体回流出口筛选由同一原料列表创建，允许 SaltWater 原液输出，避免生产修复后仍堵在机内。原生出口筛选不是 KSerialization 保存字段，旧建筑读档从新版预制体取得此设置。
+- `FusionPower/src/FusionStrings.cs`、`FusionPower/src/FusionCodex.cs`、`README.md`：纠正 Brine 中文为“浓盐水”，明确 SaltWater 为“盐水”，补齐两种进料、原液回流及同一游戏富集产率说明；`FusionPower/mod_info.yaml` 升为 0.4.4，尚未公开发布。
+- `FusionPower/tests/Regression/SeparatorScenarios.cs`、`Stubs.cs`：增加普通盐水付费产锂、原液类型/质量/温度、断电与堵管留料、600 秒批次检查。首个新增测试在旧逻辑下失败：预期剩余 18 kg 实得 0 kg，复现进料清空；修复后 53 项生产回归通过，包含既有浓盐水和水路检查。Release 构建 0 错误、2 个既有程序集警告。
+- 验证：53 项生产回归、5 项原生标签/Harmony、13 项原生数据库检查，共 71 项通过；Release 构建 0 错误、2 个既有程序集警告；git diff --check 通过。原生标签测试首次调用误把 `-clp:ErrorsOnly` 传给运行程序而在路径解析处退出，去掉该错误命令参数后通过；没有为此修改游戏或测试代码。
+- 游戏进程结束后安装至 `D:/Documents/Klei/OxygenNotIncluded/mods/local/BaiyeFusionPower`，逐文件核对 SHA-256；旧版备份为 `FusionPower/dist/install-backups/BaiyeFusionPower-20261003-000523`。生成 0.4.4 ZIP 与配套 SHA-256 文件。
+- 实际管道进料/回流、旧存档与多模组实机仍待重启验证。离线适配器不等同于 Unity 实机测试。
+
 ## 0.4.3 — 2026-10-02
 
 - 四座建筑的原生数据库条目追加分组工艺指南：接口、配方、启动储备、中子联动、电力/冷却预算、氦去向、批次与堵塞排查；保留原生及其他扩展，不重复登记条目。

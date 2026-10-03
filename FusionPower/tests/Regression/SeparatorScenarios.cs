@@ -11,10 +11,10 @@ static partial class Program
         SetMass(f.s[0],SimHashes.Brine,20,310);
         return f;
     }
-    static void Separate((IsotopeSeparatorProcess p,Storage[] s,Operational op,UnityEngine.GameObject go) f,float temperature=310)
+    static void Separate((IsotopeSeparatorProcess p,Storage[] s,Operational op,UnityEngine.GameObject go) f,float temperature=310,SimHashes kind=SimHashes.Brine)
     {
-        SetMass(f.s[0],SimHashes.Brine,20,temperature);
-        SetMass(f.s[3],SimHashes.Brine,0);
+        SetMass(f.s[0],kind,20,temperature);
+        SetMass(f.s[3],kind,0);
         GameClock.Instance.time+=.2f;Paid(f.p);
     }
     static float DroppedLithium(Storage s)=>s.droppedItems.Where(i=>i.GetComponent<PrimaryElement>().ElementID==Li)
@@ -22,6 +22,35 @@ static partial class Program
 
     static void RunSeparatorScenarios()
     {
+        Test("separator ordinary salt water produces lithium and returns the same liquid without spilling",()=>
+        {
+            var f=Separator();SetMass(f.s[0],SimHashes.Brine,0);SetMass(f.s[0],SimHashes.SaltWater,20,330);
+            Paid(f.p);
+            Near(f.s[0].GetMassAvailable(SimHashes.SaltWater),18);
+            Near(f.s[2].GetMassAvailable(Li),.012f);Near(f.s[3].GetMassAvailable(SimHashes.SaltWater),1.988f);
+            Near(f.s[0].ExactMassStored()+f.s[2].ExactMassStored()+f.s[3].ExactMassStored(),20);
+            Near(f.s[3].GetMassAvailable(SimHashes.Brine),0);Near(f.s[1].ExactMassStored(),0);
+            Near(f.s[2].FindFirst(Li.CreateTag()).GetComponent<PrimaryElement>().Temperature,330);
+            Near(f.s[3].FindFirst(SimHashes.SaltWater.CreateTag()).GetComponent<PrimaryElement>().Temperature,330);
+        });
+        Test("ordinary salt water stays stored through unpaid demand and blocked return then resumes",()=>
+        {
+            var f=Separator();SetMass(f.s[0],SimHashes.Brine,0);SetMass(f.s[0],SimHashes.SaltWater,20);
+            f.p.Sim200ms(.2f);f.p.OnPowerSettlement(480,false);
+            Near(f.s[0].GetMassAvailable(SimHashes.SaltWater),20);Near(f.s[2].ExactMassStored(),0);
+            SetMass(f.s[3],SimHashes.SaltWater,20);Paid(f.p);
+            Near(f.s[0].GetMassAvailable(SimHashes.SaltWater),20);Near(f.s[2].ExactMassStored(),0);
+            SetMass(f.s[3],SimHashes.SaltWater,0);Paid(f.p);
+            Near(f.s[0].GetMassAvailable(SimHashes.SaltWater),18);Near(f.s[2].GetMassAvailable(Li),.012f);
+        });
+        Test("600 seconds ordinary salt water creates seven whole lithium batches and retains the remainder",()=>
+        {
+            var f=Separator();SetMass(f.s[0],SimHashes.Brine,0);
+            for(int i=0;i<3000;i++)Separate(f,310,SimHashes.SaltWater);
+            Assert(f.s[2].dropEvents==7&&f.s[2].droppedItems.Count==7,"ordinary salt water did not produce whole batches");
+            Near(DroppedLithium(f.s[2])+f.s[2].GetMassAvailable(Li),36,.003f);
+            Near(f.s[2].GetMassAvailable(Li),.972f,.001f);Near(f.s[3].GetMassAvailable(SimHashes.Brine),0);
+        });
         Test("separator retains lithium below 5 kg and releases one combined batch",()=>
         {
             var f=Separator();for(int i=0;i<416;i++)Separate(f);

@@ -19,14 +19,14 @@ namespace Baiye.FusionPower
             AddElement(FusionIds.SolidTritium, zh ? "固态氚" : "Solid Tritium", zh ? "氚的冻结相态，仍具有放射性。不能把固态直接当作反应堆管道燃料，需升温恢复气态。" : "Frozen tritium remains radioactive. Warm back to gas before feeding the reactor fuel pipe.");
             AddElement(FusionIds.Helium, zh ? "氦-4" : "Helium-4", zh ? "稳定的惰性氦-4，由氘氚反应堆及锂-6增殖尾气产生。可储存、排向太空，或输入三α核合成炉合成原版精炼碳并回收能量。不可呼吸。" : "Stable inert helium-4 from fusion and breeder tail gas. Store, vent to space or feed the triple-alpha furnace for refined carbon and energy recovery. Unbreathable.");
             AddElement(FusionIds.LiquidHelium, zh ? "液态氦-4" : "Liquid Helium-4", zh ? "稳定氦-4的极低温液相。三α炉接收气体，需恢复气态再送入；本模组不把液氦自动当作过冷液冷却剂。" : "Cryogenic stable helium-4. Vaporize before feeding the gas-only triple-alpha port; liquid helium does not replace super coolant in this mod.");
-            AddElement(FusionIds.Lithium, zh ? "锂-6" : "Lithium-6", zh ? "由同位素分离器处理盐水（Brine）获得，约 5 kg 批量掉落。复制人或清扫器把固态锂-6送入氚增殖器；与实际聚变中子额度反应产生氚和氦。" : "Extracted from Brine by the separator, dropped in about 5 kg batches. Deliver solid lithium-6 to the breeder for tritium and helium using earned fusion neutron credits.");
+            AddElement(FusionIds.Lithium, zh ? "锂-6" : "Lithium-6", zh ? "由同位素分离器处理盐水（SaltWater）或浓盐水（Brine）获得，约 5 kg 批量掉落。复制人或清扫器把固态锂-6送入氚增殖器；与实际聚变中子额度反应产生氚和氦。" : "Extracted from SaltWater or Brine by the separator, dropped in about 5 kg batches. Deliver solid lithium-6 to the breeder for tritium and helium using earned fusion neutron credits.");
             AddElement(FusionIds.LiquidLithium, zh ? "液态锂-6" : "Liquid Lithium-6", zh ? "锂-6受热熔融的液相。当前增殖器通过固体配送接收锂，不接收液锂管道；需降温固化后使用。" : "Molten lithium-6. The current breeder takes solid deliveries, not liquid piping; cool and solidify before use.");
             AddElement(FusionIds.LithiumVapor, zh ? "锂-6蒸气" : "Lithium-6 Vapor", zh ? "锂-6的高温气相，不是可直接输入增殖器的气体燃料。冷却恢复固态后，按正常固体配送流程使用。" : "Hot lithium-6 vapor is not a breeder gas fuel. Cool to solid and deliver through the normal solid-material route.");
 
             AddBuilding(FusionIds.Separator, zh ? "同位素分离器" : "Isotope Separator",
-                zh ? "从水和盐水中分离聚变燃料原料。" : "Separates fusion feedstock from water and brine.",
-                zh ? "处理水得到氘，处理盐水得到锂-6；排出提取后的原液。锂以 60 g/s 累积在机内，约每满 5 kg 批量掉落；未满批次的库存会保留，供增殖器的首批锂需等待约 83 秒。"
-                   : "Extracts deuterium from water and lithium-6 from brine, returning the depleted liquid. Lithium accumulates at 60 g/s and drops in approximately 5 kg batches; partial stock is retained. The first lithium batch for a breeder takes about 83 seconds.");
+                zh ? "从水、盐水和浓盐水中分离聚变燃料原料。" : "Separates fusion feedstock from water, salt water and brine.",
+                zh ? "处理水得到氘，处理盐水（SaltWater）或浓盐水（Brine）得到锂-6；提取后的原类型液体经液管回流。锂以 60 g/s 累积在机内，约每满 5 kg 批量掉落；未满批次的库存会保留，供增殖器的首批锂需等待约 83 秒。"
+                   : "Extracts deuterium from water and lithium-6 from SaltWater or Brine, returning the same liquid type through the liquid outlet. Lithium accumulates at 60 g/s and drops in approximately 5 kg batches; partial stock is retained. The first lithium batch for a breeder takes about 83 seconds.");
             AddBuilding(FusionIds.Breeder, zh ? "氚增殖器" : "Tritium Breeder",
                 zh ? "用聚变中子照射锂-6制取氚。" : "Irradiates lithium-6 with fusion neutrons to breed tritium.",
                 zh ? "启动时用氘制氚；连接运行中的聚变反应堆后，用中子和锂-6增殖氚，另排出氦。" : "Starts by making tritium from deuterium; when linked to an active fusion reactor, breeds tritium from lithium-6 and neutrons and emits helium.");

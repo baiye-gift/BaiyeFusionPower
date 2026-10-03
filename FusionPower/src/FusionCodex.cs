@@ -25,12 +25,12 @@ namespace Baiye.FusionPower
             var sections=new List<string>();
             void Add(string title,string body,string enTitle,string enBody){sections.Add(zh?title:enTitle);sections.Add(zh?body:enBody);}
             if(id!=FusionIds.Separator&&id!=FusionIds.Breeder&&id!=FusionIds.Reactor&&id!=FusionIds.TripleAlpha)return sections.ToArray();
-            Add("核子工艺链","同位素分离器：水提氘、盐水提锂-6。氚增殖器先用氘制备启动氚，反应堆运行后利用锂与已产生的中子增殖氚。反应堆消耗氘氚，排出氦-4；三α炉把氦变成精炼碳。准备外部启动电源，并分别接通燃料、产物及循环过冷液。",
-                "Nuclear process chain","Separate deuterium from water and lithium-6 from brine. Bootstrap tritium from deuterium, then breed it from lithium and earned reactor neutrons. The reactor consumes deuterium/tritium and emits helium-4; the triple-alpha furnace converts helium into refined carbon. Supply external startup power and connect fuel, products and super-coolant loops.");
+            Add("核子工艺链","同位素分离器：水提氘、盐水或浓盐水提锂-6。氚增殖器先用氘制备启动氚，反应堆运行后利用锂与已产生的中子增殖氚。反应堆消耗氘氚，排出氦-4；三α炉把氦变成精炼碳。准备外部启动电源，并分别接通燃料、产物及循环过冷液。",
+                "Nuclear process chain","Separate deuterium from water and lithium-6 from salt water or brine. Bootstrap tritium from deuterium, then breed it from lithium and earned reactor neutrons. The reactor consumes deuterium/tritium and emits helium-4; the triple-alpha furnace converts helium into refined carbon. Supply external startup power and connect fuel, products and super-coolant loops.");
             if(id==FusionIds.Separator)
             {
-                Add("接口与配方","液体入口 (-1,0)，氘气出口 (1,1)，处理后原液出口 (1,0)，电力/自动化 (0,0)。480 W。每秒处理 10 kg 水，产 20 g 氘与 9.98 kg 水；或处理 10 kg 盐水（Brine），产 60 g 锂-6 与 9.94 kg 盐水。两者同时存在时优先处理水。此处使用原版 Brine，不是 SaltWater。",
-                    "Ports and recipes","Liquid in (-1,0), deuterium out (1,1), depleted liquid out (1,0), power/automation (0,0). Demand 480 W. Process 10 kg/s water into 20 g/s deuterium and 9.98 kg/s water, or 10 kg/s Brine into 60 g/s lithium-6 and 9.94 kg/s Brine. Water takes priority. Brine is distinct from SaltWater.");
+                Add("接口与配方","液体入口 (-1,0)，氘气出口 (1,1)，处理后原液出口 (1,0)，电力/自动化 (0,0)。480 W。每秒处理 10 kg 水，产 20 g 氘与 9.98 kg 水；或处理 10 kg 盐水（SaltWater）/浓盐水（Brine），产 60 g 锂-6 与 9.94 kg 同类型液体，经回流管输出。机内多种原料并存时依次处理水、浓盐水、盐水，每一步只使用足量的同一种原料。两种盐水采用相同的游戏富集提取率，不代表现实天然锂浓度。",
+                    "Ports and recipes","Liquid in (-1,0), deuterium out (1,1), depleted liquid out (1,0), power/automation (0,0). Demand 480 W. Process 10 kg/s water into 20 g/s deuterium and 9.98 kg/s water, or 10 kg/s SaltWater/Brine into 60 g/s lithium-6 and 9.94 kg/s of the same liquid type through the return pipe. Select a sufficient single feed in order: Water, Brine, SaltWater. Both saline liquids use the same game-scaled enriched yield, not a claim about natural lithium concentrations.");
                 Add("锂批次与堵塞","锂累积约 5 kg 后整批掉落，满速首批约 83 秒；不足一批留仓，断电与读档不会丢失。复制人或清扫器把锂送到增殖器。原液必须接回储存/循环，气体与液体出口堵塞会暂停对应配方；不能靠无限输入绕过输出缓存。",
                     "Lithium batches and blockages","Lithium drops as a complete approximately 5 kg pile; first batch takes about 83 seconds at full rate. Partial stock persists through power loss and saves. Deliver it to breeders. Return depleted liquid to storage/circulation. Blocked output buffers pause the corresponding recipe.");
             }

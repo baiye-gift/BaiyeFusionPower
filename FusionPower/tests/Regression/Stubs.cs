@@ -54,13 +54,13 @@ public static class Hash
 }
 public struct Tag { public int id; public Tag(int id){this.id=id;} }
 public static class TagManager { public static Tag Create(string s)=>new(Hash.SDBMLower(s)); }
-public enum SimHashes { Water=1, Brine=2, SuperCoolant=3, Hydrogen=4, RefinedCarbon=5 }
+public enum SimHashes { Water=1, Brine=2, SuperCoolant=3, Hydrogen=4, RefinedCarbon=5, SaltWater=6 }
 public static class GameTagExtensions { public static Tag CreateTag(this SimHashes s)=>new((int)s); }
 public class Element { public int idx; public bool IsGas; public float specificHeatCapacity; }
 public static class ElementLoader
 {
     public static float SuperCoolantHeatCapacity=8.44f;
-    public static Element FindElementByHash(SimHashes s)=>new(){idx=(int)s,specificHeatCapacity=s==SimHashes.SuperCoolant?SuperCoolantHeatCapacity:s==SimHashes.RefinedCarbon?.71f:(int)s==Hash.SDBMLower("BaiyeHelium4")?.14f:2.4f,IsGas=(int)s!=1&&(int)s!=2&&(int)s!=3&&(int)s!=5&&(int)s!=Hash.SDBMLower("BaiyeLithium6")};
+    public static Element FindElementByHash(SimHashes s)=>new(){idx=(int)s,specificHeatCapacity=s==SimHashes.SuperCoolant?SuperCoolantHeatCapacity:s==SimHashes.RefinedCarbon?.71f:(int)s==Hash.SDBMLower("BaiyeHelium4")?.14f:2.4f,IsGas=(int)s!=1&&(int)s!=2&&(int)s!=3&&(int)s!=5&&(int)s!=6&&(int)s!=Hash.SDBMLower("BaiyeLithium6")};
 }
 public class PrimaryElement : KMonoBehaviour
 {
